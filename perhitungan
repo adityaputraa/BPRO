@@ -29,12 +29,11 @@ class perhitungan {
    
    int jawaban=angka1+angka2;
     if(jawaban==hasil){
-     //System.
      System.out.println ("Benar");
      nilai+=10;
      
     }else{
-     //System.out.println ("Salah");
+     System.out.println ("Salah");
      
      nilai-=5;
     }
