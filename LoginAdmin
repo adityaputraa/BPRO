@@ -1,11 +1,10 @@
 import java.util.*;
 
+
 public class LoginAdmin{
   public static void main(String[]args){
     Scanner sc = new Scanner(System.in);
     
-    //String fName =;
-    //String lName ="";
     System.out.print("Masukkan First Name = ");
     String fName = sc.next();
     System.out.print("Masukkan Last Name = ");
@@ -16,6 +15,5 @@ public class LoginAdmin{
     
     String pass =fName.substring(3) + lName.charAt(1);
      System.out.println("Password = " + pass);
-    //System.out.print("Masukkan temperatur air dalam celcius)= ");
   }
 }
