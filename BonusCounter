@@ -6,15 +6,15 @@ public class BonusCounter
  {
   Scanner sc = new Scanner(System.in);
   
-  System.out.println("========Bonus Counter 2.0========+\n");
-  System.out.print("|Masukkan Jumlah Barang yang dibeli = ");
+  System.out.println("========Bonus Counter========");
+  System.out.print("Masukkan Jumlah Barang yang dibeli = ");
   int jmlBarang = sc.nextInt();
   
   int bonus = (jmlBarang / 2);
   int totBarang = jmlBarang + bonus;
   int harga = jmlBarang * 25000;
   
-  System.out.println("\n+========Struk Pembayaran========+\n");
+  System.out.println("========Struk Pembayaran========");
   
   System.out.println("Jumlah Barang      = " + jmlBarang);
   System.out.println("Bonus              = " + bonus);
