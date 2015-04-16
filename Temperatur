@@ -4,7 +4,7 @@ public class Temperatur{
   public static void main(String[]args){
     Scanner sc = new Scanner(System.in);
     
-    System.out.print("Masukkan temperatur air dalam celcius)= ");
+    System.out.print("Masukkan temperatur air (dalam celcius)= ");
     int masuk = sc.nextInt();
     String TempA ="";
     if (masuk < 0)
