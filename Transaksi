@@ -1,0 +1,96 @@
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.io.*;
+import java.util.*;
+
+public class Transaksi{
+	public static Scanner sc=new Scanner(System.in);
+	private static String id;
+		//public static String tglTr;
+		//public static String tglTr1;
+        //public static Vector <String> hari = new Vector <String>();
+		//public static Vector <String> namabuah2= new Vector <String>();
+	public static Vector <Transaksi> detailTransaksi = new Vector<Transaksi>();
+	public static Vector <DTransaksi> dTransaksi = new Vector<DTransaksi>();
+	public static Vector <barang> tbbarang = new Vector<barang>();
+	public static Vector <DbBarang> tabelbarang = new Vector<DbBarang>();
+	//constructor
+	public Transaksi(String id){
+		this.id=id;
+	}
+	
+	//method untuk menambah detail transaksi
+	public static void tambahDtr(){
+            System.out.println();
+            System.out.println("-- TAMBAH DATA PEMBELIAN --");
+            String id=bacaStr("Masukkan Transaksi: ");
+            Transaksi trBaru=new Transaksi(id);
+            detailTransaksi.add(trBaru);   
+            System.out.println();
+	}
+	
+	public static void cetakTransaksi(){
+		System.out.println();
+		System.out.println("*-------------<<= ADITMART CARSHOP  =>>------------*");
+		System.out.println("ID TR#: "+id);
+		System.out.println("----------------------------------------------------");
+		System.out.println("Nama Barang \t Harga Barang \t Jumlah Unit \t Sub Total");
+	}
+		
+	public static void cetakReport(){
+		System.out.println();
+		System.out.println("*----------<<= REPORT ADITMART CARSHOP  =>>----------*");
+		System.out.println("ID TR#: "+id);
+		System.out.println("------------------------------------------------------");
+		System.out.println("Nama Barang \t Jumlah Terjual \t Total Terjual              ");
+	}
+	public static String bacaStr(String pesan){	
+		System.out.print(pesan);		
+		String i=sc.next();
+		return i;
+	}
+	public static int bacaInt(String pesan){
+            System.out.print(pesan);		
+            int i=sc.nextInt();
+            return i;
+	}
+	public static double bacadouble(String pesan){
+            System.out.print(pesan);		
+            double i=sc.nextDouble();
+            return i;
+	}
+	public static void LihatTransaksi(){
+		DbBarang.cetakTransaksi();
+	}
+	public static void cetakTambahTr(){
+	boolean selesai = false; int pilih; 
+        while(!selesai)	
+		{
+			System.out.println();
+			System.out.println("*----------<<= DATA BARANG ADITMART CARSHOP  =>>---------*");
+			DbBarang.viewAllBarang();
+			System.out.println("*-----------------------------------------------------*");
+                System.out.println();
+                    System.out.println("---- Form Pemesanan Unit ----");
+                      tambahDtr();
+                      while (true)
+                        {
+                            System.out.print("Apakah anda ingin memesan unit mobil ? (y/n) :");
+                            String pesanan = sc.next();
+                            if (pesanan.equals("n"))
+								{
+								selesai = true;
+								Utama.cetakKasir();break;
+								} 
+							else if (pesanan.equals("y")){
+								DbBarang.cetakPesan();
+							}
+							else
+							{
+								System.out.println("Inputan yang anda masukkan salah!");
+							}while (selesai);
+                        System.out.println();
+                        }
+        }
+	}
+}
