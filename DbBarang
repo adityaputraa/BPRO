@@ -1,0 +1,155 @@
+import java.util.*;
+public class DbBarang {
+	public static Scanner sc = new Scanner (System.in);
+    public static Vector<barang> tabelbarang=new Vector<barang>();
+	public static Vector <DTransaksi> dTransaksi = new Vector<DTransaksi>();
+	
+	public static void addBarang(){
+            System.out.println();
+            System.out.println("-- TAMBAH DATA BARANG --");
+            String id=bacaStr("Masukkan id barang : ");
+            String nama=bacaStr("Masukkan nama barang : ");
+            int harga=bacaInt("Masukkan harga barang : ");
+            int hj = harga*10/100;
+            double hargajual=(harga+hj);
+            barang brgBaru=new barang(id,nama,harga,hargajual);
+            tabelbarang.add(brgBaru);   
+            System.out.println();
+    }
+    public static void viewAllBarang(){
+            System.out.println();
+            System.out.println("-- VIEW ALL BARANG --");
+            System.out.println("ID \t Nama \t \t Harga \t \t Harga jual");
+            for(barang brg:tabelbarang){
+                System.out.println(brg.getId()+"\t"+brg.getNama()+"\t \t"+brg.getHargabeli()+"\t \t"+brg.getHargajual());
+            }
+            System.out.println();
+    }
+    private static int cari(String id){
+        int idx=-1;
+        int i=0;
+        do{
+            if(tabelbarang.elementAt(i).getId().equals(id))
+                idx=i;
+            i++;
+        }
+        while((i<tabelbarang.size()&&(idx==-1)));
+        return idx;
+    }   
+    public static void deleteBarang(){
+		System.out.println();
+        System.out.println("-- HAPUS DATA BARANG --");
+        String id=bacaStr("Masukkan id barang yg akan dihapus : ");
+            int idx=cari(id);
+            if(idx==-1){
+				System.out.println("Nama Barang "+id+" tidak ada dalam tabel barang");
+            }
+            else{
+                String tanya=bacaStr("Apakah id barang "+id+" akan dihapus?[y/t] : ");
+					if(tanya.equalsIgnoreCase("y")){
+						tabelbarang.removeElementAt(idx);
+                        System.out.println("ID : "+id+" berhasil dihapus!");
+                    }
+            }
+        System.out.println();
+    }
+    public static void updateBarang(){
+		System.out.println();
+        System.out.println("-- UPDATE DATA BARANG --");
+        String id=bacaStr("Masukkan id barang yang akan diupdate : ");    
+            int idx=cari(id);
+				if(idx==-1){
+                    System.out.println("Nama Barang "+id+" tidak ada dalam tabel barang");
+                }
+                else{
+                    int hrg=bacaInt("Masukkan harga yang akan diupdate : ");
+                    String tanya=bacaStr("Apakah harga barang Rp."+hrg+" akan diupdate?[y/t] : ");
+                    if(tanya.equalsIgnoreCase("y")){
+					int hj = hrg*10/100;
+					double hargajual=(hrg+hj);
+					tabelbarang.elementAt(idx).setHargajual(hargajual);
+					tabelbarang.elementAt(idx).setHargabeli(hrg);
+                        System.out.println("Harga berhasil diupdate");
+                    }
+				}
+    }
+	public static int bacaInt(String pesan){
+        System.out.print(pesan);		
+        int i=sc.nextInt();
+        return i;
+	}
+	public static String bacaStr(String pesan){	
+		System.out.print(pesan);		
+        String str=sc.next();
+        return str;
+	}
+	public static double bacadouble(String pesan){
+            System.out.print(pesan);		
+            double i=sc.nextDouble();
+            return i;
+	}
+	public static void cetakMenu(){
+		int pilih;
+		do{
+		System.out.println();
+        System.out.println("*-------- Maintance Data Barang ---------*");
+        System.out.println("* 1. Insert Barang Baru                  *");
+        System.out.println("* 2. Delete Barang                       *");
+        System.out.println("* 3. Update Barang                       *");
+        System.out.println("* 4. View All Barang                     *");
+        System.out.println("* 5. Kembali Ke Menu Utama               *");
+		pilih = bacaInt("Masukkan menu pilihan (1-5) : ");
+        System.out.println();
+            switch(pilih){
+                case 1:addBarang();break;
+                case 2:deleteBarang();break;
+                case 3:updateBarang(); break;
+                case 4:viewAllBarang(); break;
+                case 5:Utama.cetakAdmin();break;
+            }
+		}while(pilih!=5);
+    }
+	public static void cetakPesan(){
+		int psn; int i;
+		psn = bacaInt("Berapa jumlah barang yang anda pesan? : ");
+            for(i=0;i<psn;i++){
+				String brgpsn = bacaStr("Masukkan Nama barang yang dipesan : ");
+				if(tabelbarang.elementAt(i).getNama().equals(brgpsn)){
+				double kuantiti = bacadouble("Berapa Unit yang dipesan : ");
+				DTransaksi dtbaru = new DTransaksi(brgpsn,kuantiti);
+				dTransaksi.add(dtbaru); 
+				System.out.println("Harga Mobil : "+tabelbarang.elementAt(i).getHargajual());
+				System.out.println();
+				}
+				else{
+					System.out.println("Barang yang dipesan tidak tersedia !!");
+				}
+            }
+	}
+	public static void cetakTransaksi(){
+		int i=0;
+		double total_bayar = 0;
+		Transaksi.cetakTransaksi();
+		for(DTransaksi tr:dTransaksi){
+			double harga = tr.getKuantiti() * tabelbarang.elementAt(i).getHargajual();
+			total_bayar += harga;
+            System.out.println(tr.getBarang()+"\t"+tabelbarang.elementAt(i).getHargajual()+"\t"+tr.getKuantiti()+"\t"+harga);
+			i++;
+        }
+		System.out.println("Total Semua : " + total_bayar);//DTransaksi.hitungTotal(DTransaksi.getKuantiti()*tabelbarang.elementAt(i).getHargajual()));
+		
+	}
+	public static void Report(){
+		int i=0; double omset_barang; double laba_barang;
+		Transaksi.cetakReport();
+		
+		laba_barang = tabelbarang.elementAt(i).getHargajual()+tabelbarang.elementAt(i).getHargabeli() ; 
+		for(DTransaksi tr:dTransaksi){
+			omset_barang = laba_barang * tr.getKuantiti();
+			System.out.println(tr.getBarang()+"\t"+tr.getKuantiti()+"\t"+tabelbarang.elementAt(i).getHargajual()+"\t"+tabelbarang.elementAt(i).getHargabeli()+"\t"+laba_barang+"\t"+omset_barang);
+			i++;
+		}
+		System.out.println("*----------------------------------------------------------*");
+	}
+	
+}
