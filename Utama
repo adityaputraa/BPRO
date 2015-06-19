@@ -1,0 +1,57 @@
+import java.util.*;
+public class Utama {
+	public static Scanner sc = new Scanner (System.in);
+	
+	public static void cetakAdmin(){
+	int pil;
+		do{
+			System.out.println("*--------- Program Khusus Admin ---------*");
+			System.out.println("* 1. Menu Manajemen User                 *");
+			System.out.println("* 2. Menu Manajemen Database Barang      *");
+			System.out.println("* 3. Report Penjualan                    *");
+			System.out.println("* 4. Logout                              *");
+			System.out.println("* 5. Keluar / Exit                       *");
+			System.out.print(" Masukkan menu pilihan (1-5): ");
+			pil = sc.nextInt();
+			switch(pil){
+				case 1:UsrMng.cetakMenu();break;
+				case 2:DbBarang.cetakMenu();break;
+				case 3:DbBarang.Report();break;
+				case 4:login();break;
+				case 5:System.exit(0);break;
+			}
+		}while(pil<5);
+	}
+	
+	public static void cetakKasir(){
+		int pil;
+		do{
+			System.out.println();
+			System.out.println("*-------- Program Manajemen Kasir --------*");
+			System.out.println("* 1. Tambah Transaksi                     *");
+			System.out.println("* 2. Lihat Transaksi                      *");
+			System.out.println("* 3. Logout                               *");
+			System.out.println("* 4. Keluar / Exit                        *");
+			System.out.print("  Pilih menu pilihan (1-4): ");
+			pil = sc.nextInt();
+			switch(pil){
+				case 1:Transaksi.cetakTambahTr();break;
+				case 2:Transaksi.LihatTransaksi();break;
+				case 3:login();break;
+				case 4:System.exit(0);break;
+			}
+		}while (pil != 4);
+	}
+	
+	public static void login(){
+		boolean oke=false;
+		if(UsrMng.login()){
+			oke=true;
+		}
+		while(true);
+	}
+	
+	public static void main(String [] args){
+		login();
+	}
+}
