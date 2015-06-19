@@ -1,0 +1,153 @@
+import java.util.*;
+import java.util.Date;  
+import java.text.DateFormat;  
+import java.text.SimpleDateFormat; 
+
+public class UsrMng{
+	public static Vector<User> tblUser=new Vector<User>();
+	public static Scanner sc=new Scanner(System.in);
+	public static void main(String[] args){ login();}
+	public static void cetakMenu(){
+		//tambahkan 2 user default untuk Admin  
+		boolean selesai=false;
+		while(!selesai)	{
+            mainMenu();
+            int pil=bacaInt("Pilih menu 1-5 : ");
+            System.out.println();
+            switch(pil){	
+				case 1:add();break;
+				case 2:delete();break;
+				case 3:changesPassword();break;
+				case 4:viewAllUser();break;
+				case 5: Utama.cetakAdmin();break;
+            }
+		}
+	}
+        public static void mainMenu()
+	{
+		System.out.println();
+		System.out.println("*-------- Program Manajemen User --------*");
+		System.out.println("* 1. Add User                            *");
+		System.out.println("* 2. Delete User                         *");
+		System.out.println("* 3. Change Password                     *");
+		System.out.println("* 4. View All Users                      *");
+		System.out.println("* 5. Kembali ke Menu Utama               *");
+	}
+	public static int bacaInt(String pesan){
+		System.out.print(pesan);		
+		int i=sc.nextInt();
+		return i;
+	}
+	public static String bacaStr(String pesan){	
+		System.out.print(pesan);		
+		String i=sc.next();
+		return i;
+	}
+	public static void add(){
+		System.out.println();
+		System.out.println("--- ADD NEW USER ---");
+		String userName=bacaStr("Masukkan User Name : ");
+		String password=bacaStr("Masukkan Password  : ");
+		User userBaru=new User(userName,password);
+		tblUser.add(userBaru);
+	}
+	public static void viewAllUser(){
+		System.out.println();
+		System.out.println("--- VIEW ALL USERS ---");
+		for(User usr:tblUser)
+			System.out.println(usr.getUserName()+"\t"+usr.getPassword());
+	}
+	private static int cari(String userName){
+		int idx=-1;
+		int i=0;
+		do{
+                    if(tblUser.elementAt(i).getUserName().equals(userName))
+			idx=i;
+                    i++;
+		}while((i<tblUser.size()&&(idx==-1)));
+		return idx;				
+	}
+	public static void delete(){
+		System.out.println();
+		System.out.println("--- DELETE USER ---");
+		String userName=bacaStr("Masukkan user name yang akan dihapus: ");		
+		int idx=cari(userName);
+		if(idx==-1)
+			System.out.println("Maaf "+userName+" Tidak ada di Tabel User !");		
+		else{
+			//apakah username tsb akan dihapus? jika ya removeElementAt(idx);		
+			String hapus=bacaStr("Apakah user " + userName +" akan dihapus [y/t]?");
+			if(hapus.equalsIgnoreCase("y")){
+				tblUser.removeElementAt(idx);
+                            System.out.println("User " + userName + " Sudah Terhapus !");	
+									
+			}
+		}			
+	}
+	public static void changesPassword(){
+		System.out.println();
+		System.out.println("--- CHANGES PASSWORD ---");
+		String uname=bacaStr("Masukkan user name yang akan diubah : ");	
+		int idx=cari(uname);		
+		if(idx==-1)
+			System.out.println("Maaf "+uname + " tidak ada di tabel User !");
+		else{
+			String newPass=bacaStr("Masukkan password baru: ");
+			tblUser.elementAt(idx).setPassword(newPass);	
+		}			
+	}
+	private String getTanggal() {  
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+        Date date = new Date();  
+        return dateFormat.format(date);  
+    } 
+	private String getTanggall() {  
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");  
+        Date date = new Date();  
+        return dateFormat.format(date);  
+    }
+	
+	public static boolean login(){
+		boolean oke=false;
+		int i=0;
+		tblUser.add(new User("kasir","67890")); 
+		tblUser.add(new User("admin","123")); 
+		do{			
+			UsrMng tgl = new UsrMng();
+			System.out.println();
+			System.out.println("  <<= SELAMAT DATANG DI ADITMART CARSHOP =>>");
+			System.out.println();
+			System.out.println(tgl.getTanggal()+"\t"+tgl.getTanggall() );
+			System.out.println("*------------------ LOGIN -----------------*");
+			String uName=bacaStr(" Masukkan user name: ");
+			String pass=bacaStr(" Masukkan password : ");
+			System.out.println("*------------------------------------------*");
+			int j=0;
+			do{
+				if(uName.contains(uName) && pass.contains(pass)){			
+					j=tblUser.size();
+						if (uName.equalsIgnoreCase("admin") && pass.equalsIgnoreCase("123")){
+							System.out.println ("Selamat Datang "+uName+", Anda Login sebagai ADMIN");
+							Utama.cetakAdmin();
+							oke = true;
+						}
+						else if (uName.equalsIgnoreCase("kasir") && pass.equalsIgnoreCase("67890")) {
+						System.out.println ("Selamat Datang "+uName+", Anda Login sebagai KASIR");
+						Utama.cetakKasir();
+						oke=true;
+						}
+						else if(i==0)
+						{System.out.println("User name atau Password yang anda masukkan salah!");}
+						else if(i==1)
+						{System.out.println("User name atau Password yang anda masukkan salah!");}
+						else if(i==2)
+						{System.out.println("User name atau Password yang anda masukkan salah!");System.exit(0);}
+				}
+				j++;
+			  }while(j<tblUser.size());
+			i++;
+		}while((!oke)&&(i<3));
+		return oke;
+	}
+
+}
