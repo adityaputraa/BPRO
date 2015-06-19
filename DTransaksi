@@ -1,0 +1,16 @@
+import java.util.*;
+public class DTransaksi{
+	private double kuantiti;
+	private String brg;
+	
+	public DTransaksi(String brg, double kuantiti){
+		this.brg=brg;
+		this.kuantiti=kuantiti;
+	}
+        public String getBarang(){
+		return brg;
+	}
+        public double getKuantiti(){
+		return kuantiti;
+	}
+}
